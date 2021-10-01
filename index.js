@@ -61,3 +61,25 @@ clothesRef.add(newClothes)
 //   console.log(doc.data())
 // })
 // .catch(err => console.error(err))
+
+//Get all shirts where price is >$30 and 
+clothesRef.where('type', '==', 'shirt')
+  .where('price', '<', 30)
+  .get()
+  .then(collection => {
+    collection.docs.forEach(docs => {
+      console.log('Updating price on:', doc.id)
+      const oldPrice = doc.data().price
+      const newPrice = oldPrice * 1.25
+      newPrice.toFixed(2)
+
+      clothesRef.doc(doc.id)
+        .update({
+          price: newPrice,
+          update: true
+        })
+        .then(()=> console.log('Updated!'))
+    })
+  })
+
+//Update price = price * 25% or (1.25)
