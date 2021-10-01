@@ -7,6 +7,12 @@ admin.initializeApp({   ///this line authenticates our credentials, connects to 
 
 const db = admin.firestore() //this line says we are using the firestore service and storing it as DB
 const clothesRef = db.collection('clothes')
+let handleError = (err) => console.error(err)
+const remapDoc = (doc) =>{
+  let item = doc.data()
+  item.id = doc.id
+  return item
+}
 
 
 const createClothes =()=>{
@@ -25,11 +31,28 @@ clothesRef.add(newClothes)
 .then(docRef => {
   console.log(docRef.id)
 })
-.catch(err => console.error(err))
+.catch(handleError)
 }
 
 
+  clothesRef.doc('SKU').delete()
+    .then(()=>{
+    clothesRef.get(
+      let clothes = []
+      collection.docs.forEach(doc => clothes.push(doc.data()))
+      console.log(clothes)
+    )})
+    .then()
+    .catch(handleError)
 
+    
+
+  clothesRef.where('price', '>=', 9.99).get()
+  .then(collection => {
+    const clothes = collections.docs.map(remapDoc)
+    console.log(clothes)
+  })
+  .catch(handleError)
 
 
 //The line below accesses the collection in our db 'nameOfCollection' and find the 'AdminUser' document
